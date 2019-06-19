@@ -1,92 +1,191 @@
 <template>
   <div class="login">
     <div class="back">
-      <i class="iconfont icon-arrow-left"></i>
+      <i class="iconfont icon-arrow-left" @click="handleGoBack"></i>
     </div>
     <div class="login_content">
       <h4>硅谷外卖</h4>
       <div class="manner">
-        <span class="SMS" :class="{active : isActive}">短信登录</span>
-        <span class="PWD" :class="{active : !isActive}">密码登录</span>
+        <span class="SMS" :class="{active : LgMethod}" @click="LgMethod = true">短信登录</span>
+        <span class="PWD" :class="{active : !LgMethod}" @click="LgMethod = false">密码登录</span>
       </div>
       <div></div>
       <!-- 手机登录 -->
       <template v-if="LgMethod">
         <div class="phone input">
-          <input type="text" maxlength="11" placeholder="手机号">
-          <button class="getCode" disabled="disabled">获取验证码</button>
+          <input type="text" maxlength="11" v-model="phone" placeholder="手机号">
+          <button
+            class="getCode"
+            :disabled="!rightPhone"
+            @click="handleGetCode"
+          >{{timeNum>0?timeNum+'后重新获取验证码':'获取验证码'}}</button>
         </div>
         <div class="verifycode input">
-          <input type="text" maxlength="6" placeholder="验证码">
+          <input type="text" maxlength="6" v-model="code" placeholder="验证码">
         </div>
       </template>
-      <!-- 手机号登录 -->
+      <!-- 账号登录 -->
       <template v-else>
         <div class="useName input">
-          <input type="text" maxlength="11" placeholder="手机/邮箱/用户名">
+          <input type="text" v-model="name" maxlength="11" placeholder="手机/邮箱/用户名">
         </div>
         <div class="passWord input">
-          <input type="password" maxlength="11" placeholder="密码" v-if="isPWD">
-          <input type="text" maxlength="11" placeholder="密码" v-else>
+          <input type="password" maxlength="11" v-model="pwd" placeholder="密码" v-if="isPWD">
+          <input type="text" maxlength="11" v-model="pwd" placeholder="密码" v-else>
           <div class="PWS" :class="{cutover:isPWD}" @click="isPWD= !isPWD">
             <span>{{isPWD?'abc':'...'}}</span>
             <i></i>
           </div>
         </div>
         <div class="code input">
-          <input type="text" maxlength="4" placeholder="验证码">
+          <input type="text" v-model="captcha" maxlength="4" placeholder="验证码">
+          <img
+            ref="captcha"
+            class="codeimg"
+            src="http://localhost:4000/captcha"
+            alt=""
+            @click="getCaptcha()"
+          >
         </div>
       </template>
       <p class="pact">
         温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
         <span>《用户服务协议》</span>
       </p>
-      <button class="login" @click="isLoginHandle">登录</button>
+      <button class="login" @click="handleLogin">登录</button>
       <p class="about">关于我们</p>
     </div>
-    <div class="model" v-if="isShowModel">
-      <!-- bounceInDown -->
-      <div class="content animated bounceInDown">
-        <div class="icon">
-          <i></i>
-          <i></i>
-        </div>
-        <!-- <div class="info"> -->
-        <span>{{'验证码必须制定'}}</span>
-        <button @click="isShowModelHandle">确认</button>
-        <!-- </div> -->
-      </div>
-    </div>
+    <model v-if="isShowModel" @getHandleModel="isShowModelHandle">{{modelInfo}}</model>
   </div>
 </template>
 
 <script>
+import model from '../../components/model/model'
+import { mapActions, mapState } from 'vuex'
+import { reqLoginPWD, reqSendCode, reqSmsLogin } from '../../api/index'
 export default {
   data () {
     return {
-      isActive: false,
+      // isActive: false,
       LgMethod: false,
       isPWD: true,
       eyeflag: 1,
       isShowModel: false,
-      isLogin: false
+      isLogin: false,
+      modelInfo: '',
+      name: '',
+      pwd: '',
+      captcha: '',
+      phone: '',
+      code: '',
+      timeNum: 0,
+      clearId: ''
     }
   },
   methods: {
-    handleClick: function () {
-      console.log(this.eyeflag)
-      this.eyeflag = this.eyeflag + 1
+    ...mapActions(['getLoginPWD']),
+    // 控制模态框的显示和隐藏
+    isShowModelHandle: function () {
+      this.isShowModel = !this.isShowModel
     },
-    isLoginHandle: function () {
-      if (!this.isLogin) {
-        console.log(123)
-        this.isShowModel = true
+    // 返回上一个页面
+    handleGoBack () {
+      this.$router.go(-1)
+    },
+    // 登录
+    async handleLogin () {
+      // 判断是短信登录还是账号登录
+      let result
+      if (this.LgMethod) {
+        const { phone, code, clearId } = this
+        if (phone.trim() === '') {
+          this.showModel('手机号不能为空')
+          return
+        } else if (code.trim() === '') {
+          this.showModel('验证码不能为空')
+          return
+        } else if (!clearId) {
+          this.showModel('请获取验证码')
+          return
+        }
+        // 发送ajax请求短信登录
+        result = await reqSmsLogin(phone, code)
+      } else {
+        const { name, pwd, captcha } = this
+        if (name.trim() === '') {
+          this.showModel('用户名不能为空')
+          return
+        } else if (pwd.trim() === '') {
+          this.showModel('密码不能为空')
+          return
+        } else if (captcha.trim() === '') {
+          this.showModel('验证码不能为空')
+          return
+        }
+        result = await reqLoginPWD(name, pwd, captcha)
+      }
+      console.log(result)
+      // 登录后对数据进行处理
+      if (result.code === 0) {
+        const user = result.data
+        console.log(user)
+        // 保存到vuex当中
+        this.$store.dispatch('recordUser', user)
+        // 跳转到个人页面
+        this.$router.replace('/profile')
+      } else {
+        // 显示新的图片验证码
+        this.getCaptcha()
+        // 显示警告提示
+        const msg = result.msg
+        this.showModel(msg)
       }
     },
-    isShowModelHandle: function () {
-      console.log(this.isShowModel)
-      this.isShowModel = !this.isShowModel
+    // 提示框
+    showModel (info) {
+      this.isShowModel = true
+      this.modelInfo = info
+      console.log(this.modelInfo)
+    },
+    // 获取图片验证码
+    getCaptcha () {
+      this.$refs.captcha.src =
+        'http://localhost:4000/captcha?time=' + Date.now()
+    },
+    // 获取验证码
+    async handleGetCode () {
+      if (this.clearId) return
+
+      this.timeNum = 30
+      this.clearId = setInterval(() => {
+        this.timeNum--
+        console.log(this.clearId)
+        if (this.timeNum === 0) {
+          console.log(1)
+          clearInterval(this.clearId)
+          this.clearId = undefined
+        }
+      }, 1000)
+      let res = await reqSendCode(this.phone)
+      if (res.code === 1) {
+        this.showModel(res.msg)
+        if (this.timeNum) {
+          this.timeNum = 0
+          clearInterval(this.clearId)
+          this.clearId = undefined
+        }
+      }
+      console.log(reqLoginPWD, reqSmsLogin)
     }
+  },
+  computed: {
+    ...mapState(['']),
+    rightPhone () {
+      return /^1\d{10}$/.test(this.phone)
+    }
+  },
+  components: {
+    model
   }
 }
 </script>
@@ -104,6 +203,17 @@ export default {
   color: #666;
   margin-top: 5px;
   margin-left: 5px;
+}
+.code {
+  position: relative;
+  overflow: hidden;
+  .codeimg {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 150px;
+    height: 50px;
+  }
 }
 .login_content {
   width: 80%;
@@ -136,7 +246,7 @@ export default {
       position: absolute;
       right: 10px;
       top: 50%;
-      color: #ccc;
+      // color: #ccc;
       transform: translateY(-50%);
       background-color: transparent;
       border: none;
@@ -233,6 +343,9 @@ input {
   margin-top: 20px;
 }
 
+bottom {
+  outline: none;
+}
 .model {
   position: fixed;
   width: 100%;

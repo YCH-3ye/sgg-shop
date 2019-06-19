@@ -1,9 +1,21 @@
 /**
  * 通过mutation间接更新state的多个方法的对象
  */
-import { RECEIVE_ADDRESS, SHOP_CATEGORY, SHOPS } from './mutation-types'
+import {
+  RECEIVE_ADDRESS,
+  SHOP_CATEGORY,
+  SHOPS,
+  SERCH_SHOPS,
+  RESEIVE_USER_INFO
+} from './mutation-types'
 
-import { reqAddress, reqShopCategore, reqShops, reqSearchShops } from '../api'
+import {
+  reqAddress,
+  reqShopCategore,
+  reqShops,
+  reqSearchShops
+  // reqLoginPWD
+} from '../api'
 
 export default {
   // 获取地理位置
@@ -36,12 +48,23 @@ export default {
   },
 
   // 搜索店铺
-  async getSearchShop ({ commit, state, keyword = '1' }) {
+  async getSearchShop ({ commit, state }, keyword) {
+    console.log(keyword)
     const geohash = state.latitude + ',' + state.longitude
-    console.log(geohash)
     const result = await reqSearchShops(keyword, geohash)
-    console.log(result)
     const shops = result.data
-    console.log(shops)
+    commit(SERCH_SHOPS, { shops })
+  },
+
+  // // 账号密码登录
+  // async getLoginPWD ({ commit }, data) {
+  //   console.log(data)
+  //   const res = await reqLoginPWD(data)
+  //   console.log(res)
+  // }
+
+  // 同步获取用户信息
+  recordUser ({ commit }, info) {
+    commit(RESEIVE_USER_INFO, { info })
   }
 }

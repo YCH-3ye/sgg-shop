@@ -2,7 +2,13 @@
  * 直接更新state的多个方法的对象
  */
 
-import { RECEIVE_ADDRESS, SHOP_CATEGORY, SHOPS } from './mutation-types'
+import {
+  RECEIVE_ADDRESS,
+  SHOP_CATEGORY,
+  SHOPS,
+  SERCH_SHOPS,
+  RESEIVE_USER_INFO
+} from './mutation-types'
 
 export default {
   // 获取地理位置
@@ -17,5 +23,13 @@ export default {
   [SHOPS] (state, { shops }) {
     console.log(shops)
     state.shops = shops
+  },
+  // 获取搜索商品信息
+  [SERCH_SHOPS] (state, { shops }) {
+    state.search_shops = shops
+  },
+  // 获取用户信息
+  [RESEIVE_USER_INFO] (state, { info }) {
+    state.rescordUser = info
   }
 }

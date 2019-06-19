@@ -2,7 +2,6 @@ import axios from 'axios'
 export default function ajax (url, data = {}, type = 'GET') {
   return new Promise(function (resolve, reject) {
     // 执行异步ajax请求
-    console.log(url, data)
     let promise
     if (type === 'GET') {
       let dataStr = '' // 数据拼接参数
@@ -17,7 +16,7 @@ export default function ajax (url, data = {}, type = 'GET') {
     } else {
       promise = axios.post(url, data)
     }
-    console.log(promise)
+    console.log(url)
 
     promise
       .then(function (res) {
