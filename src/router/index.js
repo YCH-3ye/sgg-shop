@@ -37,7 +37,27 @@ export default new Router({
     {
       path: '/shop',
       name: 'Shop',
-      component: resolve => require(['../pages/Shop/Shop.vue'], resolve)
+      component: resolve => require(['../pages/Shop/Shop.vue'], resolve),
+      children: [
+        {
+          path: '/shop/goods',
+          component: resolve =>
+            require(['../pages/Shop/ShopGoods/ShopGoods.vue'], resolve)
+        },
+        {
+          path: '/shop/ratings',
+          component: resolve =>
+            require(['../pages/Shop/ShopRatings/ShopRatings.vue'], resolve)
+        },
+        {
+          path: '/shop/info',
+          component: resolve =>
+            require(['../pages/Shop/ShopInfo/ShopInfo.vue'], resolve)
+        }, {
+          path: '/',
+          redirect: '/shop/goods'
+        }
+      ]
     },
 
     // 登录

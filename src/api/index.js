@@ -4,8 +4,6 @@ import ajax from './ajax'
 
 // mock数据模块
 const BASE_URL = '/api'
-// 获取商家信息
-export const reqShopInfo = () => ajax('/info')
 
 // 1、根据经纬度获取位置详情
 export const reqAddress = geohash => ajax(`${BASE_URL}/position/${geohash}`)
@@ -29,3 +27,12 @@ export const reqSendCode = phone => ajax(BASE_URL + '/sendcode', { phone })
 // 手机号验证码登陆
 export const reqSmsLogin = (phone, code) =>
   ajax(BASE_URL + '/login_sms', { phone, code }, 'POST')
+
+// 自动登录登陆
+export const reqOuteLogin = () => ajax(BASE_URL + '/userinfo')
+
+// 退出登录
+export const reqLoginOut = () => ajax(BASE_URL + '/logout')
+
+// 获取商家信息
+export const reqShopInfo = () => ajax('/info')

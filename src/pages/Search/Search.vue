@@ -6,7 +6,7 @@
         <div class="search">
           <div class="search_shop">
             <input type="text" v-model="search" placeholder="请输入商家或美食名称">
-            <button @click="handleGetShops(search)">提交</button>
+            <button @dblclick="handleGetShops(search)">提交</button>
           </div>
         </div>
         <div class="shops">

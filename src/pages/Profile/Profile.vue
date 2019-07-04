@@ -9,7 +9,7 @@
         <div class="profile-info">
           <i class="iconfont icon-arrow-right2 arrow"></i>
           <p class="login">
-            <a href="#">登录/注册</a>
+            <a href="#" v-if="!rescordUser.phone">{{rescordUser.name||'登录/注册'}}</a>
           </p>
           <p class="phone">
             <span>
@@ -73,6 +73,7 @@
         <i class="iconfont icon-arrow-right2 arrow"></i>
       </div>
     </div>
+    <button v-if="rescordUser.name" class="loginOut" @click="handelLoginOut">退出登录</button>
     <shopfoot></shopfoot>
   </div>
 </template>
@@ -80,8 +81,36 @@
 <script>
 import shophead from '../../components/header/header'
 import shopfoot from '../../components/footer/footer'
+import { mapState, mapActions } from 'vuex'
+import { MessageBox, Toast } from 'mint-ui'
+
 export default {
-  components: { shopfoot, shophead }
+  components: { shopfoot, shophead },
+  created () {},
+  // inject: ['reload'],
+  methods: {
+    ...mapActions(['reqLoginOut']),
+    handelLoginOut () {
+      MessageBox.confirm('确认退出吗?').then(
+        action => {
+          this.reqLoginOut()
+          Toast('登出完成')
+        },
+        action => {}
+      )
+    }
+  },
+  watch: {
+    rescordUser (val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    ...mapState(['rescordUser', 'hh'])
+  },
+  mounted () {
+    console.log(111)
+  }
 }
 </script>
 
@@ -212,6 +241,16 @@ export default {
     font-size: 16px;
     color: #666;
   }
+}
+.loginOut {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #ef4f4f;
+  border: none;
+  color: white;
+  height: 41px;
+  font-size: 16px;
+  border-radius: 4px;
 }
 
 .icon-dd_active,

@@ -25,11 +25,11 @@
         <div class="msite_shop_list">
           <div class="msite_shop_header">
             <i class="iconfont icon-xuanxiang"></i>
-            <span>附近商家</span>
+            <span @click="handleGoShop">附近商家</span>
           </div>
           <div class="shop_container">
             <ul class="shop_list">
-              <li class="shop_li" v-for="(item, index) in shops" :key="index">
+              <li class="shop_li" v-for="(item, index) in shops" :key="index" @click="handleGoShop">
                 <div class="shop_li_left">
                   <img :src="baseImgUrl+item.image_path" alt="商品">
                 </div>
@@ -78,6 +78,7 @@ import BScroll from 'better-scroll'
 export default {
   data: function () {
     return {
+      dindex: '',
       baseImageUrl: 'https://fuss10.elemecdn.com',
       baseImgUrl: 'http://cangdu.org:8001/img/'
     }
@@ -124,13 +125,18 @@ export default {
     _initScroll () {
       this.$nextTick(() => {
         const options = {
-          // scrollY: true, // 因为scrollY默认为true，其实可以省略
-          // scrollbar: {
-          //   fade: true
-          // }
+          scrollY: true, // 因为scrollY默认为true，其实可以省略
+          scrollbar: {
+            fade: true
+          },
+          click: true
         }
         this.scroll = new BScroll(this.$refs.wrapper, options)
       })
+    },
+    handleGoShop () {
+      console.log('haha')
+      this.$router.push('/shop')
     }
   }
 }

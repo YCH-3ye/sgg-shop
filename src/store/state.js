@@ -9,5 +9,8 @@ export default {
   shopCategory: [], // 商品店家
   shops: [], // 店铺,
   search_shops: [], // 搜索店铺
-  rescordUser: {} // 用户登录信息
+  rescordUser: {}, // 用户登录信息
+  goods: [], // 商品数组
+  ratings: [], // 商家评价列表
+  info: {} // 商家信息
 }

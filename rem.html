@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      div {
+        height: 6.25rem; /* 100/16 */
+        width: 6.25rem; /* 100/16 */
+        background-color: red;
+      }
+    </style>
+  </head>
+  <script>
+    ;(window.onresize = window.__setFontSize__ = function() {
+      document.documentElement.style.fontSize =
+        (Math.min(750, Math.max(document.documentElement.clientWidth, 320)) /
+          375) *
+          14 +
+        'px'
+    })()
+  </script>
+  <body>
+    <div class="rem">sdfdsf</div>
+  </body>
+  <script></script>
+</html>

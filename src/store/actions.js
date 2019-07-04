@@ -6,15 +6,24 @@ import {
   SHOP_CATEGORY,
   SHOPS,
   SERCH_SHOPS,
-  RESEIVE_USER_INFO
+  RESEIVE_USER_INFO,
+  RESEIVE_NULL_INFO,
+  RESEIVE_INFO,
+  RECEIVE_RATINGS,
+  RECEIVE_GOODS
 } from './mutation-types'
 
 import {
   reqAddress,
   reqShopCategore,
   reqShops,
-  reqSearchShops
-  // reqLoginPWD
+  reqSearchShops,
+  reqLoginPWD,
+  reqOuteLogin,
+  reqLoginOut,
+  reqShopRatings,
+  reqShopGoods,
+  reqShopInfo
 } from '../api'
 
 export default {
@@ -56,15 +65,61 @@ export default {
     commit(SERCH_SHOPS, { shops })
   },
 
-  // // 账号密码登录
-  // async getLoginPWD ({ commit }, data) {
-  //   console.log(data)
-  //   const res = await reqLoginPWD(data)
-  //   console.log(res)
-  // }
+  // 账号密码登录
+  async getLoginPWD ({ commit }, data) {
+    console.log(data)
+    const res = await reqLoginPWD(data)
+    console.log(res)
+  },
 
   // 同步获取用户信息
   recordUser ({ commit }, info) {
     commit(RESEIVE_USER_INFO, { info })
+  },
+
+  // 异步获取用户信息
+  async resOuteUser ({ commit }) {
+    let res = await reqOuteLogin()
+    console.log(res)
+    if (res.code === 0) {
+      let info = res.data
+      commit(RESEIVE_USER_INFO, { info })
+    }
+  },
+  // 推出登录
+  async reqLoginOut ({ commit }) {
+    console.log(444)
+    let res = await reqLoginOut()
+    console.log(res)
+    if (res.code === 0) {
+      commit(RESEIVE_NULL_INFO)
+    }
+  },
+
+  // 异步获取商家信息
+  async getShopInfo ({ commit }) {
+    const result = await reqShopInfo()
+    console.log(result.data)
+    if (result.code === 0) {
+      let info = result.data
+      commit(RESEIVE_INFO, { info })
+    }
+  },
+
+  async getShopGoods ({ commit }) {
+    const result = await reqShopGoods()
+    console.log(result)
+    if (result.code === 0) {
+      let info = result.data
+      commit(RECEIVE_GOODS, { info })
+    }
+  },
+
+  async getShopRatings ({ commit }) {
+    const result = await reqShopRatings()
+    console.log(result)
+    if (result.code === 0) {
+      commit(RECEIVE_RATINGS, result.data)
+    }
   }
 }

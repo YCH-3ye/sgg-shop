@@ -9,7 +9,6 @@
         <span class="SMS" :class="{active : LgMethod}" @click="LgMethod = true">短信登录</span>
         <span class="PWD" :class="{active : !LgMethod}" @click="LgMethod = false">密码登录</span>
       </div>
-      <div></div>
       <!-- 手机登录 -->
       <template v-if="LgMethod">
         <div class="phone input">
@@ -27,7 +26,7 @@
       <!-- 账号登录 -->
       <template v-else>
         <div class="useName input">
-          <input type="text" v-model="name" maxlength="11" placeholder="手机/邮箱/用户名">
+          <input type="text" v-model="usename" maxlength="11" placeholder="手机/邮箱/用户名">
         </div>
         <div class="passWord input">
           <input type="password" maxlength="11" v-model="pwd" placeholder="密码" v-if="isPWD">
@@ -61,7 +60,7 @@
 
 <script>
 import model from '../../components/model/model'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import { reqLoginPWD, reqSendCode, reqSmsLogin } from '../../api/index'
 export default {
   data () {
@@ -73,7 +72,7 @@ export default {
       isShowModel: false,
       isLogin: false,
       modelInfo: '',
-      name: '',
+      usename: '',
       pwd: '',
       captcha: '',
       phone: '',
@@ -83,7 +82,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getLoginPWD']),
     // 控制模态框的显示和隐藏
     isShowModelHandle: function () {
       this.isShowModel = !this.isShowModel
@@ -111,8 +109,8 @@ export default {
         // 发送ajax请求短信登录
         result = await reqSmsLogin(phone, code)
       } else {
-        const { name, pwd, captcha } = this
-        if (name.trim() === '') {
+        const { usename, pwd, captcha } = this
+        if (usename.trim() === '') {
           this.showModel('用户名不能为空')
           return
         } else if (pwd.trim() === '') {
@@ -122,7 +120,7 @@ export default {
           this.showModel('验证码不能为空')
           return
         }
-        result = await reqLoginPWD(name, pwd, captcha)
+        result = await reqLoginPWD(usename, pwd, captcha)
       }
       console.log(result)
       // 登录后对数据进行处理
@@ -175,7 +173,6 @@ export default {
           this.clearId = undefined
         }
       }
-      console.log(reqLoginPWD, reqSmsLogin)
     }
   },
   computed: {

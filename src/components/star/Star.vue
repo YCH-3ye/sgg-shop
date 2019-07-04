@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="stars" :class="size===1?'big':''">
     <span class="star" :class="item" v-for="(item,index) in starClasses" :key="index"></span>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   data: function () {
     return {}
   },
-  props: ['rating'],
+  props: ['rating', 'size'],
   computed: {
     starClasses () {
       const { rating } = this
@@ -34,21 +34,41 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.star {
-  width: 10px;
-  height: 10px;
-  margin-right: 3px;
-  background-size: 100%;
-  display: inline-block;
-  float: left;
-}
-.on {
-  background-image: url('./stars/star24_on@3x.png');
-}
-.half {
-  background-image: url('./stars/star48_half@3x.png');
-}
-.off {
-  background-image: url('./stars/star48_off@3x.png');
+.stars {
+  overflow: hidden;
+  .star {
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    background-size: 100%;
+    display: inline-block;
+  }
+  .on {
+    background-image: url('./stars/star24_on@3x.png');
+  }
+  .half {
+    background-image: url('./stars/star48_half@3x.png');
+  }
+  .off {
+    background-image: url('./stars/star48_off@3x.png');
+  }
+  &.big {
+    .star {
+      width: 15px;
+      height: 15px;
+      margin-right: 3px;
+      background-size: 100%;
+      display: inline-block;
+    }
+    .on {
+      background-image: url('./stars/star24_on@3x.png');
+    }
+    .half {
+      background-image: url('./stars/star48_half@3x.png');
+    }
+    .off {
+      background-image: url('./stars/star48_off@3x.png');
+    }
+  }
 }
 </style>
