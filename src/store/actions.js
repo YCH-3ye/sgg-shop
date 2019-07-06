@@ -49,9 +49,7 @@ export default {
   getShops ({ commit, state }) {
     const geohash = state.latitude + ',' + state.longitude
     reqShops(geohash).then(function (res) {
-      console.log(res.data)
       const shops = res.data
-      console.log(shops)
       commit(SHOPS, { shops })
     })
   },
@@ -80,7 +78,6 @@ export default {
   // 异步获取用户信息
   async resOuteUser ({ commit }) {
     let res = await reqOuteLogin()
-    console.log(res)
     if (res.code === 0) {
       let info = res.data
       commit(RESEIVE_USER_INFO, { info })
@@ -99,19 +96,18 @@ export default {
   // 异步获取商家信息
   async getShopInfo ({ commit }) {
     const result = await reqShopInfo()
-    console.log(result.data)
     if (result.code === 0) {
       let info = result.data
       commit(RESEIVE_INFO, { info })
     }
   },
 
-  async getShopGoods ({ commit }) {
+  async getShopGoods ({ commit }, callback) {
     const result = await reqShopGoods()
-    console.log(result)
     if (result.code === 0) {
       let info = result.data
       commit(RECEIVE_GOODS, { info })
+      callback && callback()
     }
   },
 

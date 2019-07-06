@@ -6,7 +6,7 @@
     </div>
     <div class="content">
       <div class="shop_title">
-        <div class="shop_name">
+        <div class="shop_name" @click="toggleShopShow">
           <h3>
             <i class="pingpai">品牌</i>
             {{ info.name}}
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="shoudan">
-        <p>
+        <p v-if="info.supports">
           <i class="icon">{{info.supports[0].name}}</i>
           {{info.supports[0].content}}
           <span>
@@ -38,13 +38,89 @@
         </ul>
       </div>
       <router-view></router-view>
+      <!-- <transition name="fade">
+        <div class="activity-sheet" v-show="supportShow">
+          <div class="activity-sheet-content">
+            <h2 class="activity-sheet-title">优惠活动</h2>
+            <ul class="list">
+              <li
+                class="activity-item"
+                v-for="(support, index) in info.supports"
+                :key="index"
+                :class="supportClasses[support.type]"
+              >
+                <span class="content-tag">
+                  <span class="mini-tag">{{support.name}}</span>
+                </span>
+                <span class="activity-content">{{support.content}}</span>
+              </li>
+            </ul>
+            <div class="activity-sheet-close" @click="toggleSupportShow">
+              <span class="iconfont icon-close"></span>
+            </div>
+          </div>
+          <div class="activity-sheet-cover"></div>
+        </div>
+      </transition>-->
     </div>
+    <transition name="fade">
+      <div class="shop-brief-modal" v-show="shopShow">
+        <div class="brief-modal-content">
+          <h2 class="content-title">
+            <span class="content-tag">
+              <span class="mini-tag">品牌</span>
+            </span>
+            <span class="content-name">{{info.name}}</span>
+          </h2>
+          <ul class="brief-modal-msg">
+            <li>
+              <h3>{{info.score}}</h3>
+              <p>评分</p>
+            </li>
+            <li>
+              <h3>{{info.sellCount}}单</h3>
+              <p>月售</p>
+            </li>
+            <li>
+              <h3>{{info.description}}</h3>
+              <p>约{{info.deliveryTime}}分钟</p>
+            </li>
+            <li>
+              <h3>{{info.deliveryPrice}}元</h3>
+              <p>配送费用</p>
+            </li>
+            <li>
+              <h3>{{info.distance}}</h3>
+              <p>距离</p>
+            </li>
+          </ul>
+          <h3 class="brief-modal-title">
+            <span>公告</span>
+          </h3>
+          <div class="brief-modal-notice">{{info.bulletin}}</div>
+          <div class="mask-footer" @click="toggleShopShow">
+            <span class="iconfont icon-close"></span>
+          </div>
+        </div>
+        <div class="brief-modal-cover"></div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 export default {
+  data () {
+    return {
+      shopShow: false
+    }
+  },
+  methods: {
+    toggleShopShow () {
+      this.shopShow = !this.shopShow
+    }
+  },
   mounted () {
     this.$store.dispatch('getShopInfo')
   },
@@ -86,6 +162,7 @@ export default {
 .shop {
   background-color: #fff;
   height: 100%;
+  width: 100%;
 }
 
 .shop_name {
@@ -152,5 +229,93 @@ export default {
       }
     }
   }
+}
+
+.shop-brief-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  .brief-modal-content {
+    width: 340px;
+    height: 234px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 400px auto;
+    text-align: center;
+    padding: 20px;
+    .content-title {
+      line-height: 24px;
+      font-size: 20px;
+      font-weight: 700;
+      .mini-tag {
+        display: inline-block;
+        width: 36px;
+        height: 18px;
+        background-color: #ffe339;
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+    .brief-modal-msg {
+      margin-top: 20px;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      li {
+        // width: 20%;
+        h3 {
+          font-size: 15px;
+          color: #333;
+          margin-bottom: 8px;
+        }
+        p {
+          font-size: 12px;
+          color: #ccc;
+        }
+      }
+    }
+  }
+  .brief-modal-title {
+    position: relative;
+    width: 85px;
+    height: 16px;
+    margin: 15px auto;
+    background-image: linear-gradient(90deg, #fff 0%, #333 50%, #fff 100%);
+    background-size: 100% 1px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    text-align: center;
+    span {
+      background-color: #fff;
+      padding: 0 10px;
+    }
+  }
+  .brief-modal-notice {
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .mask-footer {
+    position: relative;
+    bottom: -50px;
+    margin: 0 auto;
+    color: #fff;
+    width: 30px;
+
+    span {
+      font-size: 24px;
+    }
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

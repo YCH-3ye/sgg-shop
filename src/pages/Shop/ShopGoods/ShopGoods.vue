@@ -1,688 +1,34 @@
 <template>
   <div class="content">
-    <ul class="title">
-      <li class="active">
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-      <li>
-        <a href="#">优惠</a>
-      </li>
-    </ul>
-    <div class="shop">
+    <div ref="wrap_title">
+      <ul class="title">
+        <li :class="{'active': active===index}" v-for="(good,index) in goods" :key="index">
+          <i :style="{backgroundImage: `url(${good.icon})`}" v-if="good.icon"></i>
+          <a href="#">{{good.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="shop" ref="wrap_goods">
       <ul>
-        <li class="shopsli">
-          <h2>优惠</h2>
+        <li class="shopsli" v-for="(good,index) in goods" :key="index">
+          <h2>{{good.name}}</h2>
           <ul>
-            <li class="stli">
+            <li class="stli" v-for="(item,index) in good.foods" :key="index">
               <div>
                 <div class="shopimg">
-                  <img src="" alt="">
+                  <img :src="item.image" alt="">
                 </div>
                 <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
+                  <h4>{{item.name}}</h4>
+                  <p>{{item.description}}</p>
                   <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
+                    <span>月售{{item.sellCount}}份</span>
+                    <span>好评率{{item.rating}}%</span>
                   </p>
                 </div>
                 <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="shopsli">
-          <h2>优惠</h2>
-          <ul>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="shopsli">
-          <h2>优惠</h2>
-          <ul>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="shopsli">
-          <h2>优惠</h2>
-          <ul>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="shopsli">
-          <h2>优惠</h2>
-          <ul>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="shopsli">
-          <h2>优惠</h2>
-          <ul>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="stli">
-              <div>
-                <div class="shopimg">
-                  <img src="" alt="">
-                </div>
-                <div class="stliinfo">
-                  <h4>南瓜粥</h4>
-                  <p>甜粥</p>
-                  <p>
-                    <span>月售91份</span>
-                    <span>好评率100%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y9</span>
-                  <div>
-                    <i class="iconfont icon-hao"></i>
-                  </div>
+                  <span>Y{{item.price}}</span>
+                  <cartControl></cartControl>
                 </div>
               </div>
             </li>
@@ -690,27 +36,104 @@
         </li>
       </ul>
     </div>
-    <div class="cart">
-      <div class="logo">
-        <i class="iconfont icon-gouwuche"></i>
-      </div>
-      <div class="num">
-        <p class="total">Y0</p>
-        <p class="peisong">另需配送费Y4元</p>
-      </div>
-      <div class="qisong">Y20远起送</div>
-    </div>
+    <cart></cart>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+import { mapState } from 'vuex'
+import cartControl from '../../../components/cartControl/cartControl'
+import cart from '@/components/cart/cart'
 export default {
-  components: {}
+  data () {
+    return {
+      scrollY: 0, // 右侧滑动的Y轴坐标 (滑动过程种实时变化)
+      tops: [], // 所有右侧分类li的top组成的数组  （列表第一次显示后就不再变化）
+      food: {},
+      active: 0
+    }
+  },
+  mounted () {
+    this.$store.dispatch('getShopGoods', () => {
+      // 数据更新后执行
+      console.log(this)
+      this.$nextTick(() => {
+        // 列表数据更新显示后执行
+        console.log(this)
+        this._initTitle()
+        this._initGoods()
+      })
+    })
+  },
+  methods: {
+    _initGoods () {
+      console.log()
+      this.scroll = new BScroll(this.$refs.wrap_title, {
+        click: true
+      })
+      this.scrollGood = new BScroll(this.$refs.wrap_goods, {
+        probeType: 3,
+        click: true
+      })
+      // 添加滚动事件
+      this.scrollGood.on('scroll', ({ x, y }) => {
+        this.scrollY = Math.abs(y)
+        // 在滚动事件里面添加事件改编左边标题效果
+        this.tops.forEach((v, i) => {
+          if (v < this.scrollY && this.scrollY < this.tops[i + 1]) {
+            console.log('111', v, this.scrollY, this.tops[i + 1])
+            this.active = i
+          }
+        })
+      })
+      // 给右侧列表绑定scroll结束的监听
+      this.scrollGood.on('scrollEnd', ({ x, y }) => {
+        // console.log('scrollEnd', x, y)
+        this.scrollY = Math.abs(y)
+        console.log('scrollEnd', this.scrollY)
+      })
+    },
+    // 初始化
+    _initTitle () {
+      let tops = []
+      let top = 0
+      tops.push(top)
+      let lis = document.querySelectorAll('.shopsli')
+      console.log(lis)
+      lis.forEach(v => {
+        console.log(v.clientHeight)
+        top += v.clientHeight
+        tops.push(top)
+      })
+      this.tops = tops
+    }
+  },
+  computed: {
+    ...mapState(['goods'])
+  },
+  watch: {
+    // goods () {
+    //   this._initTitle()
+    //   this._initGoods()
+    // }
+  },
+  components: {
+    cartControl,
+    cart
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .content {
+  display: flex;
+  position: absolute;
+  top: 195px;
+  bottom: 46px;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
   .title {
     float: left;
     -webkit-box-flex: 0;
@@ -718,13 +141,24 @@ export default {
     flex: 0 0 80px;
     width: 80px;
     background: #f3f5f7;
+    ul {
+      overflow: hidden;
+      background-color: #ccc;
+    }
     li {
       width: 80px;
       height: 56px;
-      background-color: #fff;
       padding: 0 10px;
       line-height: 56px;
       text-align: center;
+      i {
+        width: 10px;
+        height: 100%;
+        background-size: contain;
+        float: left;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
       &.active {
         background-color: #fff;
       }
@@ -732,6 +166,7 @@ export default {
         display: block;
         width: 100%;
         height: 100%;
+        font-size: 12px;
         border-bottom: 1px solid #eee;
       }
     }
@@ -755,10 +190,12 @@ export default {
       overflow: hidden;
       .shopimg {
         margin-right: 10px;
-        background-color: #ccc;
         width: 57px;
         height: 78px;
         float: left;
+        img {
+          width: 100%;
+        }
       }
       .stliinfo {
         overflow: hidden;
@@ -775,9 +212,13 @@ export default {
       .place {
         span {
           float: left;
+          color: #f01414;
         }
         div {
           float: right;
+          span {
+            float: none;
+          }
           i {
             width: 24px;
             height: 24px;
