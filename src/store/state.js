@@ -12,5 +12,6 @@ export default {
   rescordUser: {}, // 用户登录信息
   goods: [], // 商品数组
   ratings: [], // 商家评价列表
-  info: {} // 商家信息
+  info: {}, // 商家信息
+  goodCart: [] // 购物车
 }

@@ -1,18 +1,31 @@
 <template>
   <div class="cartControl">
     <transition name="more">
-      <i v-if="actions">--</i>
+      <i v-if="good.count" @click="addHandel(false)">--</i>
     </transition>
-    <span>1</span>
-    <i class="iconfont icon-hao"></i>
+    <span v-if="good.count">{{good.count}}</span>
+    <i class="iconfont icon-hao" @click="addHandel(true)"></i>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   data () {
     return {
       actions: false
     }
+  },
+  methods: {
+    ...mapActions(['updataGoodsCart']),
+    addHandel (flag) {
+      this.updataGoodsCart({ flag: flag, goods: this.good })
+    }
+  },
+  computed: {
+    ...mapState([])
+  },
+  props: {
+    good: Object
   }
 }
 </script>

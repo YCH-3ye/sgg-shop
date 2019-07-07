@@ -10,7 +10,10 @@ import {
   RESEIVE_NULL_INFO,
   RESEIVE_INFO,
   RECEIVE_RATINGS,
-  RECEIVE_GOODS
+  RECEIVE_GOODS,
+  ADD_GOODS_CART,
+  DEC_GOODS_CART,
+  CLEAR_GOODS_CART
 } from './mutation-types'
 
 import {
@@ -101,7 +104,7 @@ export default {
       commit(RESEIVE_INFO, { info })
     }
   },
-
+  // 获取商品列表
   async getShopGoods ({ commit }, callback) {
     const result = await reqShopGoods()
     if (result.code === 0) {
@@ -110,12 +113,23 @@ export default {
       callback && callback()
     }
   },
-
+  // 获取评论
   async getShopRatings ({ commit }) {
     const result = await reqShopRatings()
     console.log(result)
     if (result.code === 0) {
       commit(RECEIVE_RATINGS, result.data)
     }
+  },
+  // 添加商品假如购物车
+  updataGoodsCart ({ commit }, { flag, goods }) {
+    if (flag) {
+      commit(ADD_GOODS_CART, goods)
+    } else {
+      commit(DEC_GOODS_CART, goods)
+    }
+  },
+  clearGoodsCart ({ commit }) {
+    commit(CLEAR_GOODS_CART)
   }
 }

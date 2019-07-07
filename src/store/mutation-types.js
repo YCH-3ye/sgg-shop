@@ -11,3 +11,6 @@ export const RESEIVE_NULL_INFO = 'reseive_null_info' // 用户信息
 export const RESEIVE_INFO = 'reseive_info' // 店铺信息
 export const RECEIVE_RATINGS = 'receive_ratings' // 接收商家评价数组
 export const RECEIVE_GOODS = 'receive_goods' // 接收商家评价数组
+export const ADD_GOODS_CART = 'add_goods_cart' // 添加商品
+export const DEC_GOODS_CART = 'dec_goods_cart' // 减少商品
+export const CLEAR_GOODS_CART = 'clear_goods_cart' // 清空商品

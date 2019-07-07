@@ -1,40 +1,42 @@
 <template>
-  <div class="content">
-    <div ref="wrap_title">
-      <ul class="title">
-        <li :class="{'active': active===index}" v-for="(good,index) in goods" :key="index">
-          <i :style="{backgroundImage: `url(${good.icon})`}" v-if="good.icon"></i>
-          <a href="#">{{good.name}}</a>
-        </li>
-      </ul>
-    </div>
-    <div class="shop" ref="wrap_goods">
-      <ul>
-        <li class="shopsli" v-for="(good,index) in goods" :key="index">
-          <h2>{{good.name}}</h2>
-          <ul>
-            <li class="stli" v-for="(item,index) in good.foods" :key="index">
-              <div>
-                <div class="shopimg">
-                  <img :src="item.image" alt="">
+  <div>
+    <div class="content">
+      <div ref="wrap_title">
+        <ul class="title">
+          <li :class="{'active': active===index}" v-for="(good,index) in goods" :key="index">
+            <i :style="{backgroundImage: `url(${good.icon})`}" v-if="good.icon"></i>
+            <a href="#">{{good.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="shop" ref="wrap_goods">
+        <ul>
+          <li class="shopsli" v-for="(good,index) in goods" :key="index">
+            <h2>{{good.name}}</h2>
+            <ul>
+              <li class="stli" v-for="(item,index) in good.foods" :key="index">
+                <div>
+                  <div class="shopimg">
+                    <img :src="item.image" alt="">
+                  </div>
+                  <div class="stliinfo">
+                    <h4>{{item.name}}</h4>
+                    <p>{{item.description}}</p>
+                    <p>
+                      <span>月售{{item.sellCount}}份</span>
+                      <span>好评率{{item.rating}}%</span>
+                    </p>
+                  </div>
+                  <div class="place">
+                    <span>Y{{item.price}}</span>
+                    <cartControl :good="item"></cartControl>
+                  </div>
                 </div>
-                <div class="stliinfo">
-                  <h4>{{item.name}}</h4>
-                  <p>{{item.description}}</p>
-                  <p>
-                    <span>月售{{item.sellCount}}份</span>
-                    <span>好评率{{item.rating}}%</span>
-                  </p>
-                </div>
-                <div class="place">
-                  <span>Y{{item.price}}</span>
-                  <cartControl></cartControl>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
     <cart></cart>
   </div>
